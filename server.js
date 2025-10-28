@@ -108,6 +108,16 @@ bot.edited.all(rootHook);
 // Replies
 bot.message(function (msg, reply, next) {
   if (msg.reply === undefined || msg.reply.from.id !== this.get("id")) return next();
+  
+  if (msg.command === "json") {
+    var jsonData = JSON.stringify(msg.reply, null, 2);
+    if (jsonData.length > 4000) {
+      return reply.text(jsonData.substring(0, 4000) + "\n\n... (truncated, message too long)");
+    } else {
+      return reply.text(jsonData);
+    }
+  }
+  
   if (msg.file)
     return handleDownload(msg, reply);
   if (msg.context.editor)
