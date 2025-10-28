@@ -111,11 +111,14 @@ bot.message(function (msg, reply, next) {
   
   if (msg.command === "json") {
     var jsonData = JSON.stringify(msg.reply, null, 2);
-    if (jsonData.length > 4000) {
-      return reply.text(jsonData.substring(0, 4000) + "\n\n... (truncated, message too long)");
-    } else {
-      return reply.text(jsonData);
+    var formattedJson = "```json\n" + jsonData + "\n```";
+    
+    if (formattedJson.length > 4000) {
+      var truncatedJson = jsonData.substring(0, 3950);
+      formattedJson = "```json\n" + truncatedJson + "\n```\n... (truncated)";
     }
+    
+    return reply.text(formattedJson);
   }
   
   if (msg.file)
@@ -532,12 +535,14 @@ bot.command("json", function (msg, reply, next) {
   }
   
   var jsonData = JSON.stringify(msg.reply, null, 2);
+  var formattedJson = "```json\n" + jsonData + "\n```";
   
-  if (jsonData.length > 4000) {
-    reply.text(jsonData.substring(0, 4000) + "\n\n... (truncated, message too long)");
-  } else {
-    reply.text(jsonData);
+  if (formattedJson.length > 4000) {
+    var truncatedJson = jsonData.substring(0, 3950);
+    formattedJson = "```json\n" + truncatedJson + "\n```\n... (truncated)";
   }
+  
+  reply.text(formattedJson);
 });
 
 // FIXME: add inline bot capabilities!
