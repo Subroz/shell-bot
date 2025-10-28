@@ -13,12 +13,22 @@ var Command = require("./lib/command").Command;
 var Editor = require("./lib/editor").Editor;
 
 var CONFIG_FILE = path.join(__dirname, "config.json");
-try {
-    var config = require(CONFIG_FILE);
-} catch (e) {
-    console.error("Couldn't load the configuration file, starting the wizard.\n");
-    require("./lib/wizard").configWizard({ configFile: CONFIG_FILE });
-    return;
+var config;
+
+if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_OWNER_ID) {
+    config = {
+        authToken: process.env.TELEGRAM_BOT_TOKEN,
+        owner: parseInt(process.env.TELEGRAM_OWNER_ID)
+    };
+    console.log("Using configuration from environment variables.");
+} else {
+    try {
+        config = require(CONFIG_FILE);
+    } catch (e) {
+        console.error("Couldn't load the configuration file, starting the wizard.\n");
+        require("./lib/wizard").configWizard({ configFile: CONFIG_FILE });
+        return;
+    }
 }
 
 var bot = botgram(config.authToken, { agent: utils.createAgent() });
