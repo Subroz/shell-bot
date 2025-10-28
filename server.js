@@ -111,14 +111,16 @@ bot.message(function (msg, reply, next) {
   
   if (msg.command === "json") {
     var jsonData = JSON.stringify(msg.reply, null, 2);
-    var formattedJson = "```json\n" + jsonData + "\n```";
+    var escapedJson = escapeHtml(jsonData);
+    var formattedJson = "<pre><code>" + escapedJson + "</code></pre>";
     
     if (formattedJson.length > 4000) {
-      var truncatedJson = jsonData.substring(0, 3950);
-      formattedJson = "```json\n" + truncatedJson + "\n```\n... (truncated)";
+      var truncatedJson = jsonData.substring(0, 3900);
+      var escapedTruncated = escapeHtml(truncatedJson);
+      formattedJson = "<pre><code>" + escapedTruncated + "</code></pre>\n<i>... (truncated)</i>";
     }
     
-    return reply.text(formattedJson);
+    return reply.html(formattedJson);
   }
   
   if (msg.file)
@@ -535,14 +537,16 @@ bot.command("json", function (msg, reply, next) {
   }
   
   var jsonData = JSON.stringify(msg.reply, null, 2);
-  var formattedJson = "```json\n" + jsonData + "\n```";
+  var escapedJson = escapeHtml(jsonData);
+  var formattedJson = "<pre><code>" + escapedJson + "</code></pre>";
   
   if (formattedJson.length > 4000) {
-    var truncatedJson = jsonData.substring(0, 3950);
-    formattedJson = "```json\n" + truncatedJson + "\n```\n... (truncated)";
+    var truncatedJson = jsonData.substring(0, 3900);
+    var escapedTruncated = escapeHtml(truncatedJson);
+    formattedJson = "<pre><code>" + escapedTruncated + "</code></pre>\n<i>... (truncated)</i>";
   }
   
-  reply.text(formattedJson);
+  reply.html(formattedJson);
 });
 
 // FIXME: add inline bot capabilities!
