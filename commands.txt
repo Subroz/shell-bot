@@ -19,4 +19,5 @@ setinteractive - Enable / disable shell interactive flag
 help - Get help
 file - View and edit small text files
 upload - Upload and overwrite raw files
+json - Display JSON data of replied message
 r - Alias for /run or /enter

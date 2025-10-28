@@ -47,10 +47,11 @@ Modified `server.js` to prioritize environment variables over config.json file:
 ## Recent Changes (2025-10-28)
 
 ### Replit Environment Setup
-1. **Environment Variable Support:** Modified `server.js` lines 18-35 to read configuration from environment variables (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_OWNER_ID`)
+1. **Environment Variable Support:** Modified `server.js` lines 18-40 to read configuration from environment variables (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_OWNER_ID`) with validation
 2. **Dependency Updates:** Updated `node-pty` from `^0.9.0` to `^1.0.0` for Node.js 20 compatibility
 3. **System Dependencies:** Added Python 3 and GCC via Nix for native module compilation
 4. **Workflow Configuration:** Set up "Telegram Bot" workflow to run `node server.js` with console output
+5. **New Feature:** Added `/json` command to display JSON data of replied messages for debugging and inspection
 
 ### Technical Details
 - **Build Requirements:** Python 3 and GCC are required to compile node-pty native modules
@@ -71,6 +72,7 @@ Modified `server.js` to prioritize environment variables over config.json file:
 - `/shell` - View/change the shell
 - `/env` - View/set environment variables
 - `/resize` - Change terminal size
+- `/json` - Display JSON data of any message (reply to a message with this command)
 - `/token` - Generate access token for other users
 - `/grant` / `/revoke` - Manage user access
 

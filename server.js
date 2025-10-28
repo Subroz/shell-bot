@@ -516,6 +516,20 @@ bot.command("help", function (msg, reply, next) {
   );
 });
 
+bot.command("json", function (msg, reply, next) {
+  if (!msg.reply) {
+    return reply.html("Reply to a message with /json to see its JSON data.");
+  }
+  
+  var jsonData = JSON.stringify(msg.reply, null, 2);
+  
+  if (jsonData.length > 4000) {
+    reply.text(jsonData.substring(0, 4000) + "\n\n... (truncated, message too long)");
+  } else {
+    reply.text(jsonData);
+  }
+});
+
 // FIXME: add inline bot capabilities!
 // FIXME: possible feature: restrict chats to UIDs
 // FIXME: persistence
