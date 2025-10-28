@@ -16,9 +16,14 @@ var CONFIG_FILE = path.join(__dirname, "config.json");
 var config;
 
 if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_OWNER_ID) {
+    var ownerId = parseInt(process.env.TELEGRAM_OWNER_ID);
+    if (isNaN(ownerId)) {
+        console.error("Error: TELEGRAM_OWNER_ID must be a valid numeric Telegram user ID.");
+        process.exit(1);
+    }
     config = {
         authToken: process.env.TELEGRAM_BOT_TOKEN,
-        owner: parseInt(process.env.TELEGRAM_OWNER_ID)
+        owner: ownerId
     };
     console.log("Using configuration from environment variables.");
 } else {
